@@ -1,26 +1,38 @@
 import streamlit as st
 from database.user_db import authenticate_user, create_user
-from utils.ui import display_message
+from utils.ui import display_message, success_button
 
 def show():
     """Display the login page"""
-    st.title("Facebook Manager")
-    
-    # Centered column layout
+    # Center the login form
     col1, col2, col3 = st.columns([1, 2, 1])
     
     with col2:
+        # Add logo and app title with modern styling
+        st.markdown("""
+            <div style="text-align: center; padding: 1.5rem 0;">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/51/Facebook_f_logo_%282019%29.svg/150px-Facebook_f_logo_%282019%29.svg.png" width="80">
+                <h1 style="margin-top: 1rem;">Facebook Manager</h1>
+                <p style="color: #65676B; font-size: 1.1rem; margin-bottom: 2rem;">Manage all your Facebook accounts in one place</p>
+            </div>
+        """, unsafe_allow_html=True)
+        
         # Create tabs for login and registration
         tab1, tab2 = st.tabs(["Login", "Register"])
         
         with tab1:
-            st.subheader("Login to Your Account")
-            
-            # Login form
+            # Login form with improved styling
             with st.form("login_form"):
-                username = st.text_input("Username")
-                password = st.text_input("Password", type="password")
-                submit_button = st.form_submit_button("Login")
+                st.markdown('<div style="height: 20px"></div>', unsafe_allow_html=True)
+                
+                username = st.text_input("Username", placeholder="Enter your username")
+                password = st.text_input("Password", type="password", placeholder="Enter your password")
+                
+                st.markdown('<div style="height: 10px"></div>', unsafe_allow_html=True)
+                
+                col1, col2, col3 = st.columns([1, 2, 1])
+                with col2:
+                    submit_button = st.form_submit_button("Login", use_container_width=True)
                 
                 if submit_button:
                     if username and password:
@@ -40,16 +52,20 @@ def show():
                         st.error("Please enter both username and password")
         
         with tab2:
-            st.subheader("Create a New Account")
-            
-            # Registration form
+            # Registration form with improved styling
             with st.form("register_form"):
-                new_username = st.text_input("Username")
-                new_password = st.text_input("Password", type="password")
-                confirm_password = st.text_input("Confirm Password", type="password")
-                email = st.text_input("Email (optional)")
+                st.markdown('<div style="height: 20px"></div>', unsafe_allow_html=True)
                 
-                submit_button = st.form_submit_button("Register")
+                new_username = st.text_input("Username", placeholder="Choose a username")
+                email = st.text_input("Email (optional)", placeholder="Enter your email")
+                new_password = st.text_input("Password", type="password", placeholder="Create a password")
+                confirm_password = st.text_input("Confirm Password", type="password", placeholder="Confirm your password")
+                
+                st.markdown('<div style="height: 10px"></div>', unsafe_allow_html=True)
+                
+                col1, col2, col3 = st.columns([1, 2, 1])
+                with col2:
+                    submit_button = st.form_submit_button("Create Account", use_container_width=True)
                 
                 if submit_button:
                     if not new_username or not new_password:
@@ -65,3 +81,13 @@ def show():
                             st.rerun()
                         else:
                             st.error(f"Registration failed: {result}")
+        
+        # Add additional information
+        st.markdown("""
+            <div style="text-align: center; margin-top: 2rem; padding: 1rem; background-color: #F2F3F5; border-radius: 10px;">
+                <p style="color: #65676B; font-size: 0.9rem;">
+                    Welcome to the Facebook Manager app. Manage all your Facebook pages,
+                    posts, and comments in one centralized dashboard.
+                </p>
+            </div>
+        """, unsafe_allow_html=True)
