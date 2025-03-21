@@ -1,0 +1,9 @@
+streamlit
+psycopg2-binary
+facebook-sdk
+requests
+pandas
+pillow
+python-dotenv
+passlib
+bcrypt
